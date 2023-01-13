@@ -41,3 +41,59 @@ class Player(pg.sprite.Sprite):
                 self.image = pg.transform.rotate(moving_shielded_image, self.angle)
             self.rect.x = self.pos.x
             self.rect.y = self.pos.y
+
+    def key_listener(self):
+        key = pg.key.get_pressed()
+        if key[pg.K_UP]:
+            if self.speed <= 7:
+                self.speed += 0.3
+            move = pg.math.Vector2()
+            move.from_polar((self.speed, self.angle + 90))
+            self.pos.x += move.x
+            self.pos.y -= move.y
+            if not self.shielded:
+                self.image = pg.transform.rotate(moving_image, self.angle)
+            else:
+                self.image = pg.transform.rotate(moving_shielded_image, self.angle)
+            self.moving = True
+        if key[pg.K_DOWN]:
+            if self.speed <= 7:
+                self.speed += 0.3
+            move = pg.math.Vector2()
+            move.from_polar((self.speed, self.angle - 90))
+            self.pos.x += move.x
+            self.pos.y -= move.y
+            if not self.shielded:
+                self.image = pg.transform.rotate(moving_image, self.angle)
+            else:
+                self.image = pg.transform.rotate(moving_shielded_image, self.angle)
+            self.moving = True
+        if key[pg.K_RIGHT]:
+            if self.speed <= 7:
+                self.speed += 0.3
+            move = pg.math.Vector2()
+            move.from_polar((self.speed, self.angle))
+            self.pos.x += move.x
+            self.pos.y -= move.y
+            if not self.shielded:
+                self.image = pg.transform.rotate(moving_image, self.angle)
+            else:
+                self.image = pg.transform.rotate(moving_shielded_image, self.angle)
+            self.moving = True
+        elif key[pg.K_LEFT]:
+            if self.speed <= 7:
+                self.speed += 0.3
+            move = pg.math.Vector2()
+            move.from_polar((self.speed, self.angle - 180))
+            self.pos.x += move.x
+            self.pos.y -= move.y
+            if not self.shielded:
+                self.image = pg.transform.rotate(moving_image, self.angle)
+            else:
+                self.image = pg.transform.rotate(moving_shielded_image, self.angle)
+            self.moving = True
+        self.rect.x = self.pos.x
+        self.rect.y = self.pos.y
+
+    def end_rotation(self):
+        self.rect = self.image.get_rect(center=self.pos)
