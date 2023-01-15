@@ -28,3 +28,18 @@ class PowerUp(pg.sprite.Sprite):
             self.image = pg.transform.rotate(slowdown, self.angle)
         print(self.image.get_rect(center=pos))
         self.rect = self.image.get_rect(center=pos)
+
+    def update(self):
+        move = pg.math.Vector2()
+        move.from_polar((self.vel, self.angle + 90))
+        self.pos.x += move.x
+        self.pos.y -= move.y
+        self.rect.center = self.pos
+        if self.rect.centery >= screen.get_height() - 25:
+            self.kill()
+
+    def draw(self, surface):
+        surface.blit(self.image, (self.pos.x, self.pos.y))
+
+    def apply_power(self):
+        return self.type
